@@ -14,5 +14,11 @@ jobs:
             - name: Ver fechas del runner
               run: date
 
-            - name: Ver archivos disponibles
+    repo-files:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v6
+
+            - name: List repository files
               run: ls -la
