@@ -10,3 +10,9 @@ jobs:
         steps:
             - name: Hello World
               run: echo "Hello, World!"
+
+            - name: Ver fechas del runner
+              run: date
+
+            - name: Ver archivos disponibles
+              run: ls -la
