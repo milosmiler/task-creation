@@ -49,7 +49,6 @@ const sortedTasks = computed(() => {
   return [...filteredTasks.value].sort((first, second) => {
     if (!first.due_date) return 1
     if (!second.due_date) return -1
-
     return new Date(first.due_date) - new Date(second.due_date)
   })
 })
@@ -192,10 +191,7 @@ onMounted(loadData)
 <template>
   <main class="app-shell">
     <header class="topbar">
-      <div>
         <h1>Gestor de tareas</h1>
-      </div>
-
       <div class="topbar-actions">
         <button class="ghost-button" type="button" @click="loadData">
           Actualizar
