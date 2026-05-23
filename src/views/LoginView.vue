@@ -79,11 +79,9 @@ const submitLogin = () => {
           <input v-model="loginForm.remember" type="checkbox" />
           <span>Mantener sesión iniciada</span>
         </label>
-
         <p v-if="errorMessage" class="alert alert-error">{{ errorMessage }}</p>
-
         <button class="primary-button login-button" type="submit">
-          Entrar al gestor
+          Entrar
         </button>
       </form>
     </section>
