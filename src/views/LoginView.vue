@@ -53,7 +53,6 @@ const submitLogin = () => {
         <span class="eyebrow">Bienvenido</span>
         <h2>Inicia sesión</h2>
       </div>
-
       <form class="login-form" @submit.prevent="submitLogin">
         <label class="field">
           <span>Correo</span>
@@ -64,7 +63,6 @@ const submitLogin = () => {
             type="email"
           />
         </label>
-
         <label class="field">
           <span>Contraseña</span>
           <input
@@ -74,16 +72,13 @@ const submitLogin = () => {
             type="password"
           />
         </label>
-
         <label class="remember-row">
           <input v-model="loginForm.remember" type="checkbox" />
           <span>Mantener sesión iniciada</span>
         </label>
-
         <p v-if="errorMessage" class="alert alert-error">{{ errorMessage }}</p>
-
         <button class="primary-button login-button" type="submit">
-          Entrar al gestor
+          Entrar
         </button>
       </form>
     </section>
