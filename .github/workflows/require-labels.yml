@@ -1,0 +1,37 @@
+name: Require Labels
+
+on:
+  pull_request:
+    branches: [dev, main]
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled, ready_for_review]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  required-labels:
+    name: Required labels are present
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate required labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = context.payload.pull_request.labels.map(l => l.name);
+            const typeLabels = ["feat", "fix", "chore", "docs"];
+            const areaLabels = ["frontend", "backend", "ci", "auth", "ui"];
+
+            const hasType = labels.some(label => typeLabels.includes(label));
+            const hasArea = labels.some(label => areaLabels.includes(label));
+
+            core.info(`Current labels: ${labels.join(", ") || "none"}`);
+
+            if (!hasType || !hasArea) {
+              const missing = [];
+              if (!hasType) missing.push(`one type label: ${typeLabels.join(", ")}`);
+              if (!hasArea) missing.push(`one area label: ${areaLabels.join(", ")}`);
+
+              core.setFailed(
+                `Missing required labels. Add ${missing.join(" and ")}.`
+              );
+            }

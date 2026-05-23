@@ -1,0 +1,27 @@
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/workflows/**
+
+ui:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/views/**
+          - src/components/**
+          - src/styles.css
+
+frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/**
+          - index.html
+
+backend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/services/**
+
+auth:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/views/LoginView.vue
