@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "architecture:check": "node scripts/check-atomic-design.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-vue": "5.2.4",

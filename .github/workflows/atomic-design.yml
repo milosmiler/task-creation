@@ -1,0 +1,57 @@
+name: Atomic Design Check
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  atomic-design:
+    name: Atomic Design rules
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect frontend component changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            components:
+              - 'src/components/**'
+
+      - name: Skip when no frontend component changes
+        if: steps.changes.outputs.components != 'true'
+        run: echo "No changes in src/components. Skipping Atomic Design check."
+
+      - name: Setup Node.js
+        if: steps.changes.outputs.components == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Atomic Design validation
+        if: steps.changes.outputs.components == 'true'
+        run: node scripts/check-atomic-design.mjs
+
+      - name: Comment success on PR
+        if: steps.changes.outputs.components == 'true' && success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: "La arquitectura front-end paso limpia Atomic Design."
+              });
+            } catch (error) {
+              core.warning(`Could not publish PR comment: ${error.message}`);
+            }
